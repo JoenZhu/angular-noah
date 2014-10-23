@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app='sportsStore'>
+<head>
+	<title>Sports Store</title>
+	<script type="text/javascript" src="./node_modules/angular/angular.js"></script>
+	<link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.css" />
+	<script type="text/javascript" src="./controllers/sportsStore.js"></script>
+	<script type="text/javascript" src="./filters/customerFilters.js"></script>
+</head>
+<body ng-controller='sportsStoreCtrl'>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<a class="navbar-brand" href='#'>SPORT STORE</a>
+		</div>
+		<div class="panel panel-default row">
+			<div class="col-xs-3">
+				<a class="btn btn-block btn-default btn-lg" ng-click='selectCategory()'>Home</a>
+				<a class="btn btn-blcok btn-default btn-lg" 
+				   ng-repeat='item in data.products | orderBy:"category" | unique:"category"'
+				   ng-click='selectCategory(item)'>
+				   {{item}}
+				</a>
+			</div>
+			<div class="col-xs-8">
+				<div class="well" ng-repeat='item in data.products'>
+					<h3>
+						<strong>{{item.name}}</strong>
+						<span class="pull-right label label-primary">
+							{{item.price|currency}}
+						</span>
+					</h3>
+					<span class="lead">{{item.description}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
