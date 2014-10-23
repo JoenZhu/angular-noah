@@ -1,15 +1,10 @@
 {
-	"name": "angular-noah",
-	"description": "Noah's angular demo",
-	"version": "0.0.1" ,
-	"private": true ,
-	"dependencies": {
-		"express": "3.x",
-		"angular": "1.2.x",
-		"bootstrap": "3.x.x",
-		"angular-route": "~1.2.x",
-		"angular-animate": "~1.2.x",
-		"angular-resource": "~0.x.x",
-		"angular-ui-router": "~0.x.x"
-	}
+  "name": "angular-noah",
+  "description": "Noah's angular demo",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "connect": "^3.2.0",
+    "serve-static": "^1.7.0"
+  }
 }
