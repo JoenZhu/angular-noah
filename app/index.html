@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app='sportsStore'>
+<head>
+	<title>Sports Store</title>
+	<script type="text/javascript" src="./node_modules/angular/angular.js"></script>
+	<link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.css" />
+	<script type="text/javascript" src="./controllers/sportsStore.js"></script>
+	<script type="text/javascript" src="./filters/customerFilters.js"></script>
+	<script type="text/javascript" src="./controllers/cart.js"></script>
+	<script type="text/javascript" src="./node_modules/angular-route/angular-route.js"></script>
+</head>
+<body ng-controller='sportsStoreCtrl'>
+	<div class="container">
+		<div class="navbar navbar-inverse">
+			<a class="navbar-brand" href='#'>SPORT STORE</a>
+			<cart-summary />
+		</div>
+		<!--show error-->
+		<div class="alert alert-danger" ng-show='data.error'>
+			Error({{data.error.status}}). The product data was not loaded.
+			<a href='/index.html' class="alert-link">Click here to try again</a>
+		</div>
+
+		<ng-view />
+		<!-- <div ng-include='"views/productList.html"'></div>
+		<ng-include src='"views/productList.html"'></ng-include>  和上面的效果一样，注意src的值-->
+	</div>
+</body>
+</html>
