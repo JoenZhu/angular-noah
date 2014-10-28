@@ -26,7 +26,8 @@ angular.module('customerFilters', [])
 			if (data.length < start_index){
 				return [] ;
 			} else {
-				return $filter('limitTo')(data.splice(start_index), size) ;
+				return $filter('limitTo')(data.splice(start_index), size) ; //Array.prototype.splice(index, howmany,...)
+				                                                            //当仅有index提供的时候， howmany= arr.length-index
 			}
 		} else {
 			return data ;

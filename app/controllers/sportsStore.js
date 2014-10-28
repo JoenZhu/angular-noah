@@ -1,31 +1,33 @@
-var app = angular.module('sportsStore', ['customerFilters']);  
+var app = angular.module('sportsStore', ['customerFilters', 'cart', 'ngRoute']);  
 
-app.controller('sportsStoreCtrl', ['$scope', function($scope){
-	$scope.data = {
-		products: [
-			{name:"product #1", description:"A product", category: "Category #1", price: 100},
-			{name:"product #2", description:"A product", category: "Category #2", price: 120},
-			{name:"product #3", description:"A product", category: "Category #1", price: 102.9},
-			{name:"product #4", description:"A product", category: "Category #3", price: 103},
-			{name:"product #5", description:"A product", category: "Category #4", price: 112},
-			{name:"product #6", description:"A product", category: "Category #1", price: 100},
-			{name:"product #7", description:"A product", category: "Category #2", price: 120},
-			{name:"product #8", description:"A product", category: "Category #1", price: 102.9},
-			{name:"product #9", description:"A product", category: "Category #3", price: 103},
-			{name:"product #10", description:"A product", category: "Category #4", price: 112},
-			{name:"product #11", description:"A product", category: "Category #1", price: 100},
-			{name:"product #12", description:"A product", category: "Category #2", price: 120},
-			{name:"product #13", description:"A product", category: "Category #1", price: 102.9},
-			{name:"product #14", description:"A product", category: "Category #3", price: 103},
-			{name:"product #15", description:"A product", category: "Category #4", price: 112}]
-	}
+app.config(function ($routeProvider) {
+	$routeProvider.when('/checkout',{
+		templateUrl: '../views/checkoutSummary.html'
+	})
+	.when('/products',{
+		templateUrl: '../views/productList.html'
+	})
+	.otherwise({
+		templateUrl: '../views/productList.html'
+	})
+})
+.constant('dataUrl', 'http://localhost:5500/products') //使用前应先启动Deploy服务器
+.controller('sportsStoreCtrl', ['$scope', '$http', 'dataUrl', function($scope, $http, dataUrl){
+	$scope.data = {} ;
+
+	$http.get(dataUrl).success(function (data) {
+		$scope.data.products = data;
+	})
+	.error(function (error) {
+		$scope.data.error = error ;
+	});
 }]);
 
 app.constant('productListActionClass', 'btn-primary')
-.constant('productListPageCount', 5)
+.constant('productListPageCount', 3)
 .controller('productListCtrl', 
-	['$scope', '$filter', 'productListActionClass', 'productListPageCount', 
-		function($scope, $filter, productListActionClass, productListPageCount){
+	['$scope', '$filter', 'productListActionClass', 'productListPageCount', 'cart',
+	 function($scope, $filter, productListActionClass, productListPageCount, cart){
 
 		var selectedCategory = null ; 
 
@@ -41,6 +43,7 @@ app.constant('productListActionClass', 'btn-primary')
 			$scope.selectedPage = newPage;
 		}
 
+        // 筛选已选择的类型
 		$scope.categoryFilterFn = function(product){
 			return selectedCategory == null || product.category == selectedCategory;
 		}
@@ -51,6 +54,10 @@ app.constant('productListActionClass', 'btn-primary')
 
 		$scope.getPageClass = function (page) {
 			return $scope.selectedPage == page ? productListActionClass : '' ;
+		}
+
+		$scope.addProductToCart = function (product) {
+			cart.addProduct(product.id, product.name, product.price) ;
 		}
 	}]
 );
