@@ -1,4 +1,10 @@
-angular-noah
-============
+make sure you env have nodejs and Deploy
 
-For noah angular study
+1. clone project
+> `git clone https://github.com/JoenZhu/angular-noah`
+
+2. instal dependencies
+> `npm store`
+
+3. run application 
+> `node server.js`
